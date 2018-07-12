@@ -42,7 +42,20 @@
     <!-- Left panel with reveal effect-->
     <div class="panel panel-left panel-reveal">
         <div class="content-block">
-            <p>Left panel content goes here</p>
+            <!-- left content here -->
+            <div class="list inset">
+                <ul>
+                    <li>
+                        <input type="checkbox" name="date1" value="park"> Park Date
+                    </li>
+                    <li>
+                        <input type="checkbox" name="date2" value="hiking"> Go Hiking
+                    </li>
+                    <li>
+                        <input type="checkbox" name="date3" value="restaurant"> Go to a Restaurant
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
 
@@ -71,44 +84,63 @@
                 <div data-page="index" class="page">
                     <!-- Scrollable page content -->
                     <div class="page-content">
-                        <div id="buttons_main" class="center">
+                        <!-- City Options -->
+                        <div id="cities_dropdown">
+                            <select id="dropdown">
+                                <option id="lynchburg" value="lynchburg">Lynchburg, VA</option>
+                                <option id="williamston" value="williamston">Williamston, NC</option>
+                                <option id="greenville" value="greenville">Greenville, NC</option>
+                                <option id="newbern" value="newbern">New Bern, NC</option>
+                            </select>
+                        </div>
+
+                        <!-- Buttons -->
+                        <div id="buttons_main" class="block">
                             <div class="row">
                                 <div class="col"></div>
-                                <div class="col"><button class="button button-fill button-big color-green">Free</button></div>
+                                <div class="col">
+                                    <button id="freeButton" class="button button-fill button-big color-green" >
+                                        Free
+                                    </button>
+                                </div>
                                 <div class="col"></div>
                             </div>
                             <div class="row">
                                 <div class="col"></div>
-                                <div class="col"><button class="button button-fill button-big color-yellow">Cheap</button></div>
-                                <div class="col"></div>                        </div>
+                                <div class="col">
+                                    <button id="cheapButton" class="button button-fill button-big color-yellow" onclick="showCheap()">
+                                        Cheap
+                                    </button>
+                                </div>
+                                <div class="col"></div>                        
+                            </div>
                             <div class="row">
                                 <div class="col"></div>
-                                <div class="col"><button class="button button-fill button-big color-orange">Medium</button></div>
-                                <div class="col"></div>                        </div>
+                                <div class="col">
+                                    <button id="mediumButton" class="button button-fill button-big color-orange" onclick="showMedium()">
+                                        Medium
+                                    </button>
+                                </div>
+                                <div class="col"></div>                        
+                            </div>
                             <div class="row">
                                 <div class="col"></div>
-                                <div class="col"><button class="button button-fill button-big color-red">Pricey</button></div>
+                                <div class="col">
+                                    <button id="priceyButton" class="button button-fill button-big color-red" onclick="showPricey()">
+                                        Pricey
+                                    </button>
+                                </div>
                                 <div class="col"></div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
-
-            <!-- Bottom Toolbar
-            <div class="toolbar">
-                <div class="toolbar-inner">
-                    Toolbar links
-                    <a href="#" class="link">Link 1</a>
-                    <a href="#" class="link">Link 2</a>
-                </div>
-            </div> -->
         </div>
     </div>
 
     <script type="text/javascript" src="cordova.js"></script>
-    <script type="text/javascript" src="lib/framework7/js/framework7.min.js"></script>
+    <script type="text/javascript" src="lib/framework7/js/framework7.js"></script>
     <script type="text/javascript" src="js/my-app.js"></script>
 </body>
 

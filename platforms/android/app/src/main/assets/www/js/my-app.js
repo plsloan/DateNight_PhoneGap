@@ -41,3 +41,38 @@ $$(document).on('pageInit', '.page[data-page="about"]', function (e) {
     // Following code will be executed for page with data-page attribute equal to "about"
     myApp.alert('Here comes About page');
 })
+
+
+// -------------------------------------------- MY FUNCTIONS --------------------------------------------
+// dropdown
+var dropdown = document.getElementById("dropdown"),
+    lynchburg = document.getElementById("lynchburg"), 
+    williamston = document.getElementById("williamston"), 
+    greenville = document.getElementById("greenville"), 
+    newbern = document.getElementById("newbern");
+
+dropdown.onclick = function() {
+    var value = dropdown.options[dropdown.selectedIndex].value;
+};
+
+// button functions
+var freeButton = document.getElementById("freeButton"),
+    cheapButton = document.getElementById("cheapButton"),
+    mediumButton = document.getElementById("mediumButton"),
+    priceyButton = document.getElementById("priceyButton");
+
+freeButton.onclick = function() { 
+    window.confirm("You pressed free.");
+};
+cheapButton.onclick = function() { 
+    window.confirm("You pressed cheap."); 
+};
+mediumButton.onclick = function() { 
+    window.confirm("You pressed medium.");
+};
+priceyButton.onclick = function() { 
+    window.confirm("You pressed pricey.");
+};
+
+
+// 

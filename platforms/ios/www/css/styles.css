@@ -14,19 +14,28 @@
     background: #000000;
 }
 
-#buttons_main {
-    width: 100px;
-    height: 100px;
+.panel .content-block .row {
+    background: silver;
+    border-radius: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
 
-    position: absolute;
-    top: 45%;
-    bottom: 55%;
-    left: 40%;
-    right: 40%;
-
+#cities_dropdown {
     margin: auto;
+    width: 50%;
+    text-align: center;
+    padding-top: 4em;
+}
+
+#buttons_main {
+    padding-top: 6em;
 }
 
 .row {
     margin-bottom: 15px;
+}
+
+button {
+    width: 200px;
 }
