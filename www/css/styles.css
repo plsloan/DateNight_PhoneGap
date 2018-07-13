@@ -14,11 +14,33 @@
     background: #000000;
 }
 
+.navbar {
+    height: 55px;
+}
+
+.panel {
+    background: #f7f7f8;
+}
+
 .panel .content-block .row {
-    background: silver;
+    background: #efeff4;
     border-radius: 5px;
     padding-top: 5px;
     padding-bottom: 5px;
+}
+
+.list-block .list-block-label {
+    text-align: center;
+    color: black;
+    font-size: 14pt;
+}
+
+.list-block {
+    font-size: 12pt;
+}
+
+#addDate {
+    margin-top: 10px;
 }
 
 #cities_dropdown {
