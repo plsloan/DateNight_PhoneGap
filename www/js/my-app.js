@@ -46,16 +46,78 @@ $$(document).on('pageInit', '.page[data-page="about"]', function (e) {
 
 
 // -------------------------------------------- MY FUNCTIONS --------------------------------------------
+// database init
+var idbAdapter = new LokiIndexedAdapter();
+var datenightDB = new loki('datenightDB.db', {
+    autoload: true,
+    autoloadCallback : databaseInitialize,
+    autosave: true, 
+    autosaveInterval: 4000
+});
+// var cities = datenightDB.getCollection("cities");
+function databaseInitialize() {
+    var cities = datenightDB.getCollection("cities");
+    if (cities === null) {
+      cities = datenightDB.addCollection("cities");
+    }
+}
+
+
 // dropdown
 var dropdown = document.getElementById("dropdown_actual"),
-    lynchburg = document.getElementById("lynchburg"), 
-    williamston = document.getElementById("williamston"), 
-    greenville = document.getElementById("greenville"), 
-    newbern = document.getElementById("newbern");
+    addCityBtn = document.getElementById("addCityBtn");
+initializeDropdown();
 
 dropdown.onclick = function() {
     var value = dropdown.options[dropdown.selectedIndex].value;
 };
+
+addCityBtn.onclick = function() {
+    if (dropdown.length == 1 && dropdown.options[0].value == "placeholder") {
+        dropdown.options[0] = null;
+        dropdown.options.length = 0;
+    }
+
+    addCity("Greenville", "NC");
+}
+
+function initializeDropdown() {
+    databaseInitialize();
+    var locations = datenightDB.getCollection("cities").find();
+    if (locations.length != 0) {
+        for (i = 0; i < locations.length; i++) {
+            addCity(locations[i].city, locations[i].state);
+        }
+    } else {
+        if (dropdown.length == 0) {
+            var placeholder = document.createElement("option");
+            placeholder.value = "placeholder";
+            placeholder.innerText = "Add a City, ST...";
+        
+            dropdown.appendChild(placeholder);
+        }
+    }
+}
+
+// add database function
+function addCity(c, st) {
+    var locations = datenightDB.getCollection("cities");
+    var option = document.createElement("option");
+    
+    option.value = c.toLowerCase();
+    option.innerText = c + ", " + st;
+
+    dropdown.appendChild(option);
+
+    var doc = {
+        id: locations.find().length + 1,
+        city: c,
+        state: st,
+        dates: []
+    };
+
+    locations.insert(doc);
+}
 
 // button functions
 var freeButton = document.getElementById("freeButton"),
@@ -77,30 +139,13 @@ priceyButton.onclick = function() {
 };
 
 
-// database init
-var idbAdapter = new LokiIndexedAdapter();
-var datenightDB = new loki('datenightDB.db', {
-    autoload: true,
-    autoloadCallback : databaseInitialize,
-    autosave: true, 
-    autosaveInterval: 4000
-});
-function databaseInitialize() {
-    var cities = datenightDB.getCollection("cities");
-    if (cities === null) {
-      cities = datenightDB.addCollection("cities");
-    }
-  
-    // runProgramLogic();
-}
-
-
 // left panel
 var addDateBtn = document.getElementById("addDateBtn");
 addDateBtn.onclick = function(name) {
     addDate("Date");
 }
 
+// add database function
 function addDate(name) {
     var item = document.createElement("li");
     
