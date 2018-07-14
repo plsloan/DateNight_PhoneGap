@@ -47,7 +47,7 @@ $$(document).on('pageInit', '.page[data-page="about"]', function (e) {
 
 // -------------------------------------------- MY FUNCTIONS --------------------------------------------
 // dropdown
-var dropdown = document.getElementById("dropdown"),
+var dropdown = document.getElementById("dropdown_actual"),
     lynchburg = document.getElementById("lynchburg"), 
     williamston = document.getElementById("williamston"), 
     greenville = document.getElementById("greenville"), 
@@ -77,4 +77,64 @@ priceyButton.onclick = function() {
 };
 
 
-// 
+// database init
+var idbAdapter = new LokiIndexedAdapter();
+var datenightDB = new loki('datenightDB.db', {
+    autoload: true,
+    autoloadCallback : databaseInitialize,
+    autosave: true, 
+    autosaveInterval: 4000
+});
+function databaseInitialize() {
+    var cities = datenightDB.getCollection("cities");
+    if (cities === null) {
+      cities = datenightDB.addCollection("cities");
+    }
+  
+    // runProgramLogic();
+}
+
+
+// left panel
+var addDateBtn = document.getElementById("addDateBtn");
+addDateBtn.onclick = function(name) {
+    addDate("Date");
+}
+
+function addDate(name) {
+    var item = document.createElement("li");
+    
+    var label = document.createElement("label");
+    label.className ="label-checkbox item-content";
+    
+    var checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.name = "dates";
+    checkbox.value = name.toLowerCase();
+    checkbox.checked = "checked";
+
+    var item_media = document.createElement("div");
+    item_media.className = "item-media";
+
+    var icon = document.createElement("i");
+    icon.className = "icon icon-form-checkbox";
+    item_media.appendChild(icon);
+
+    var item_inner = document.createElement("div");
+    item_inner.className = "item-inner";
+
+    var item_title = document.createElement("div");
+    item_title.className = "item-title";
+    item_title.innerText = name;
+    item_inner.appendChild(item_title);
+
+    label.appendChild(checkbox);
+    label.appendChild(item_media);
+    label.appendChild(item_inner);
+
+    item.appendChild(label);
+
+
+    var dd = document.getElementById("date_list");
+    dd.appendChild(item);
+}

@@ -10,7 +10,7 @@
             * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
                 * Enable inline JS: add 'unsafe-inline' to default-src
         -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *">
+    <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *"> -->
 
     <!-- Required meta tags-->
     <meta charset="utf-8">
@@ -21,7 +21,7 @@
     <meta name="msapplication-tap-highlight" content="no">
 
     <!-- Your app title -->
-    <title></title>
+    <title>Date Night</title>
 
     <!-- This template defaults to the iOS CSS theme. To support both iOS and material design themes, see the Framework7 Tutorial at the link below:
         http://www.idangero.us/framework7/tutorials/maintain-both-ios-and-material-themes-in-single-app.html
@@ -45,7 +45,7 @@
             <!-- left content here -->
             <div class="list-block">
                 <div class="list-block-label">Dates</div>
-                <ul>
+                <ul id="date_list">
                     <li>
                         <label class="label-checkbox item-content">
                             <input type="checkbox" name="dates" value="Park" checked="checked">
@@ -70,7 +70,7 @@
                     </li>
                 </ul>
 
-                <a id="addDate" href="#" class="button button-raised button-fill color-blue">Add Date</a>
+                <a id="addDateBtn" href="#" class="button button-raised button-fill color-blue">Add Date</a>
             </div>
         </div>
     </div>
@@ -104,14 +104,24 @@
                     <div class="page-content">
                         <!-- City Options -->
                         <div id="cities_dropdown">
-                            <select id="dropdown">
+                            <select id="dropdown_actual">
                                 <option id="lynchburg" value="lynchburg">Lynchburg, VA</option>
                                 <option id="williamston" value="williamston">Williamston, NC</option>
                                 <option id="greenville" value="greenville">Greenville, NC</option>
                                 <option id="newbern" value="newbern">New Bern, NC</option>
                             </select>
                         </div>
+                        <div class="row"></div>
+                        <div class="row">
+                            <div class="col"></div>
+                            <div class="col">
+                                <button id="addCityBtn" class="button color-blue" >
+                                    Add City
+                                </button>
+                            </div>
+                            <div class="col"></div>
 
+                        </div>
                         <!-- Cost Buttons -->
                         <div id="buttons_main" class="block">
                             <div class="row">
@@ -159,6 +169,8 @@
 
     <script type="text/javascript" src="cordova.js"></script>
     <script type="text/javascript" src="lib/framework7/js/framework7.js"></script>
+    <script type="text/javascript" src="lib/loki/lokijs.js"></script>
+    <script type="text/javascript" src="lib/loki/loki-indexed-adapter.js"></script>
     <script type="text/javascript" src="js/my-app.js"></script>
 </body>
 

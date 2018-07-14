@@ -19,6 +19,7 @@
     "cordova-plugin-console": "~1.0.1",
     "cordova-plugin-statusbar": "~1.0.1",
     "cordova-plugin-whitelist": "~1.2.0",
-    "framework7": "^3.0.1"
+    "framework7": "^3.0.1",
+    "lokijs": "^1.5.5"
   }
 }

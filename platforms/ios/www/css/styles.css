@@ -50,14 +50,18 @@
     padding-top: 4em;
 }
 
+#addCityBtn {
+    width: 130px;
+}
+
 #buttons_main {
-    padding-top: 6em;
+    padding-top: 5em;
+}
+
+#buttons_main button {
+    width: 200px;
 }
 
 .row {
     margin-bottom: 15px;
-}
-
-button {
-    width: 200px;
 }
