@@ -40,6 +40,7 @@ function databaseInitialize() {
 // dropdown
 var dropdown = document.getElementById("dropdown_actual"),
     addCityBtn = document.getElementById("addCityBtn");
+    deleteCityBtn = document.getElementById("deleteCityBtn");
 
 $$(document).on('deviceready', function() {
     databaseInitialize();
@@ -59,7 +60,7 @@ addCityBtn.onclick = function() {
         dropdown.options.length = 0;
     }
 
-    // get input
+    // get input and add city
     myApp.modal({
         title: "Location Information",
 
@@ -107,7 +108,21 @@ addCityBtn.onclick = function() {
             }
         ]
     })
-}
+
+    initializeDates();
+
+    if (datenightDB.getCollection("cities").find().length != 0) {
+        addDateBtn.style.visibility = 'visible';
+    }
+};
+
+deleteCityBtn.onclick = function() {
+    var currentCity = datenightDB.getCollection("cities").find()[dropdown.selectedIndex];
+    datenightDB.getCollection("cities").remove(currentCity);
+    dropdown.remove(dropdown.selectedIndex);
+    initializeCities();
+    initializeDates();
+};
 
 function initializeCities() {
     databaseInitialize();
@@ -162,8 +177,7 @@ var freeButton = document.getElementById("freeButton"),
     priceyButton = document.getElementById("priceyButton");
 
 freeButton.onclick = function() { 
-    // window.confirm("You pressed free.");
-    swal('hello world');
+    window.confirm("You pressed free.");
 };
 cheapButton.onclick = function() { 
     window.confirm("You pressed cheap."); 
@@ -178,6 +192,7 @@ priceyButton.onclick = function() {
 
 // left panel
 var addDateBtn = document.getElementById("addDateBtn");
+
 addDateBtn.onclick = function() {
     myApp.prompt("Enter date...", "", function (value) {
         addDate(value);
@@ -185,6 +200,15 @@ addDateBtn.onclick = function() {
 }
 
 function initializeDates() {
+    if (datenightDB.getCollection("cities").find().length == 0) {
+        addDateBtn.style.visibility = 'hidden';
+    }
+
+    var date_list = document.getElementById("date_list");
+    while (date_list.firstChild) {
+        date_list.removeChild(date_list.firstChild);
+    }
+
     var city = datenightDB.getCollection("cities").find()[dropdown.selectedIndex];
     
     if (city.dates.length != 0) {
@@ -213,7 +237,7 @@ function addDate(name) {
 
 function addDateToList(name) {
     var item = document.createElement("li");
-    
+
     var label = document.createElement("label");
     label.className ="label-checkbox item-content";
     
