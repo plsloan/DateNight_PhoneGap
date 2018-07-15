@@ -60,8 +60,53 @@ addCityBtn.onclick = function() {
     }
 
     // get input
+    myApp.modal({
+        title: "Location Information",
 
-    addCity("Greenville", "NC");
+        text:   "<div class='list-block'>" + 
+                    "<ul>" +
+                        "<!-- Text inputs -->" +
+                        "<li>" + 
+                            "<div class='item-content'>" +
+                                "<div class='item-inner'>" + 
+                                    "<div class='item-title label'>City</div>" + 
+                                    "<div class='item-input'>" + 
+                                        "<input id='city_input' type='text' placeholder='City'>" + 
+                                    "</div>" + 
+                                "</div>" + 
+                            "</div>" + 
+                        "</li>" + 
+                        "<li>" + 
+                            "<div class='item-content'>" + 
+                                "<div class='item-inner'>" +
+                                    "<div class='item-title label'>State</div>" +
+                                    "<div class='item-input'>" + 
+                                        "<input id='state_input' type='text' placeholder='ST'>" +
+                                    "</div>" + 
+                                "</div>" + 
+                            "</div>" + 
+                        "</li>" +
+                    "</ul>" +
+                "</div>",
+
+        buttons: [
+            { 
+                text: "Ok",
+                bold: true,
+                onClick: function() {
+                    var c = document.getElementById("city_input").value,
+                        s = document.getElementById("state_input").value;
+
+                    addCity(c, s);
+                    console.log(c + ", " + s + " was added.");
+                }
+            }, 
+            {
+                text: "Cancel",
+                bold: true,
+            }
+        ]
+    })
 }
 
 function initializeCities() {
@@ -117,7 +162,8 @@ var freeButton = document.getElementById("freeButton"),
     priceyButton = document.getElementById("priceyButton");
 
 freeButton.onclick = function() { 
-    window.confirm("You pressed free.");
+    // window.confirm("You pressed free.");
+    swal('hello world');
 };
 cheapButton.onclick = function() { 
     window.confirm("You pressed cheap."); 
@@ -132,8 +178,10 @@ priceyButton.onclick = function() {
 
 // left panel
 var addDateBtn = document.getElementById("addDateBtn");
-addDateBtn.onclick = function(name) {
-    addDate("Date");
+addDateBtn.onclick = function() {
+    myApp.prompt("Enter date...", "", function (value) {
+        addDate(value);
+    });
 }
 
 function initializeDates() {
@@ -190,7 +238,10 @@ function addDateToList(name) {
     item_title.innerText = name;
     item_inner.appendChild(item_title);
 
-    label.appendChild(checkbox).appendChild(item_media).appendChild(item_inner);
+    label.appendChild(checkbox);
+    label.appendChild(item_media);
+    label.appendChild(item_inner);
+
     item.appendChild(label);
 
     var dd = document.getElementById("date_list");
