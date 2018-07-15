@@ -19,32 +19,6 @@ $$(document).on('deviceready', function() {
 });
 
 
-// Now we need to run the code that will be executed only for About page.
-
-// Option 1. Using page callback for page (for "about" page in this case) (recommended way):
-myApp.onPageInit('about', function (page) {
-    // Do something here for "about" page
-
-})
-
-// Option 2. Using one 'pageInit' event handler for all pages:
-$$(document).on('pageInit', function (e) {
-    // Get page data from event data
-    var page = e.detail.page;
-
-    if (page.name === 'about') {
-        // Following code will be executed for page with data-page attribute equal to "about"
-        myApp.alert('Here comes About page');
-    }
-})
-
-// Option 2. Using live 'pageInit' event handlers for each page
-$$(document).on('pageInit', '.page[data-page="about"]', function (e) {
-    // Following code will be executed for page with data-page attribute equal to "about"
-    myApp.alert('Here comes About page');
-})
-
-
 // -------------------------------------------- MY FUNCTIONS --------------------------------------------
 // database init
 var idbAdapter = new LokiIndexedAdapter();
@@ -66,10 +40,17 @@ function databaseInitialize() {
 // dropdown
 var dropdown = document.getElementById("dropdown_actual"),
     addCityBtn = document.getElementById("addCityBtn");
-initializeDropdown();
+
+$$(document).on('deviceready', function() {
+    databaseInitialize();
+    initializeCities();
+    initializeDates();
+});
+    
 
 dropdown.onclick = function() {
-    var value = dropdown.options[dropdown.selectedIndex].value;
+    // var value = dropdown.options[dropdown.selectedIndex].value;
+    initializeDates();
 };
 
 addCityBtn.onclick = function() {
@@ -78,15 +59,17 @@ addCityBtn.onclick = function() {
         dropdown.options.length = 0;
     }
 
+    // get input
+
     addCity("Greenville", "NC");
 }
 
-function initializeDropdown() {
+function initializeCities() {
     databaseInitialize();
     var locations = datenightDB.getCollection("cities").find();
     if (locations.length != 0) {
         for (i = 0; i < locations.length; i++) {
-            addCity(locations[i].city, locations[i].state);
+            addCityToDropdown(locations[i].city, locations[i].state);
         }
     } else {
         if (dropdown.length == 0) {
@@ -99,24 +82,32 @@ function initializeDropdown() {
     }
 }
 
-// add database function
 function addCity(c, st) {
     var locations = datenightDB.getCollection("cities");
-    var option = document.createElement("option");
-    
-    option.value = c.toLowerCase();
-    option.innerText = c + ", " + st;
+    var previousID = 0;
+    addCityToDropdown(c, st);
 
-    dropdown.appendChild(option);
+    for (i = 0; i < locations.find().length; i++) {
+        previousID = locations.find()[i].id;
+    }
 
     var doc = {
-        id: locations.find().length + 1,
+        _id: previousID + 1,
         city: c,
         state: st,
         dates: []
     };
 
     locations.insert(doc);
+}
+
+function addCityToDropdown(c, st) {
+    var option = document.createElement("option");
+
+    option.value = c.toLowerCase();
+    option.innerText = c + ", " + st;
+
+    dropdown.appendChild(option);
 }
 
 // button functions
@@ -145,8 +136,34 @@ addDateBtn.onclick = function(name) {
     addDate("Date");
 }
 
-// add database function
+function initializeDates() {
+    var city = datenightDB.getCollection("cities").find()[dropdown.selectedIndex];
+    
+    if (city.dates.length != 0) {
+        for (i = 0; i < city.dates.length; i++) {
+            addDateToList(city.dates[i]);
+        }
+    }
+}
+
 function addDate(name) {
+    addDateToList(name);
+
+    var city = datenightDB.getCollection("cities").find()[dropdown.selectedIndex];
+    city.dates.push(name);
+
+    var doc = {
+        _id: city.id,
+        city: city.city,
+        state: city.state,
+        dates: city.dates
+    };
+
+    datenightDB.getCollection("cities").remove(city);
+    datenightDB.getCollection("cities").insert(doc);
+}
+
+function addDateToList(name) {
     var item = document.createElement("li");
     
     var label = document.createElement("label");
@@ -173,12 +190,8 @@ function addDate(name) {
     item_title.innerText = name;
     item_inner.appendChild(item_title);
 
-    label.appendChild(checkbox);
-    label.appendChild(item_media);
-    label.appendChild(item_inner);
-
+    label.appendChild(checkbox).appendChild(item_media).appendChild(item_inner);
     item.appendChild(label);
-
 
     var dd = document.getElementById("date_list");
     dd.appendChild(item);
