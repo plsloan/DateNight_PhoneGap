@@ -31,6 +31,13 @@
     margin-top: 10px;
 }
 
+.label-checkbox.item-content .button {
+    width: 60px;
+    height: 37px;
+    padding-top: 6px;
+    border: 0px;
+}
+
 #cities_dropdown {
     margin: auto;
     width: 50%;

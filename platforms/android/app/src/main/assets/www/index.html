@@ -29,7 +29,7 @@
 
     <link rel="stylesheet" href="lib/framework7/css/framework7.ios.min.css">
     <link rel="stylesheet" href="lib/framework7/css/framework7.ios.colors.min.css">
-
+    <link rel="stylesheet" href="lib/framework7/css/framework7-icons.css">
     <link rel="stylesheet" href="css/styles.css">
 </head>
 
@@ -41,14 +41,79 @@
     <div class="panel-overlay"></div>
     <!-- Left panel with reveal effect-->
     <div class="panel panel-left panel-reveal">
-        <div class="content-block">
-            <!-- left content here -->
-            <div class="list-block">
-                <div class="list-block-label">Dates</div>
-                <ul id="date_list">
-                </ul>
-                <a id="addDateBtn" href="#" class="button button-raised button-fill color-blue">Add Date</a>
-            </div>
+        <!-- left content here -->
+        <div class="list-block accordion-list">
+            <div class="list-block-label">Dates</div>
+            <ul>
+                <!-- Free Accordion Item -->
+                <li class="accordion-item">
+                    <a href="#" class="item-content item-link">
+                        <div class="item-inner">
+                            <div class="item-title">Free</div>
+                        </div>
+                    </a>
+                    <div class="accordion-item-content">
+                        <div class="content-block">
+                            <div class="list-block">
+                                <ul id="freeDates">
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+                <!-- Cheap Accordion Item -->
+                <li class="accordion-item">
+                    <a href="#" class="item-content item-link">
+                        <div class="item-inner">
+                            <div class="item-title">Cheap</div>
+                        </div>
+                    </a>
+                    <div class="accordion-item-content">
+                        <div class="content-block">
+                            <div class="list-block">
+                                <ul id="cheapDates">
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+                <!-- Medium Accordion Item -->
+                <li class="accordion-item">
+                    <a href="#" class="item-content item-link">
+                        <div class="item-inner">
+                            <div class="item-title">Medium</div>
+                        </div>
+                    </a>
+                    <div class="accordion-item-content">
+                        <div class="content-block">
+                            <div class="list-block">
+                                <ul id="mediumDates">
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+                <!-- Pricey Accordion Item -->
+                <li class="accordion-item">
+                    <a href="#" class="item-content item-link">
+                        <div class="item-inner">
+                            <div class="item-title">Pricey</div>
+                        </div>
+                    </a>
+                    <div class="accordion-item-content">
+                        <div class="content-block">
+                            <div class="list-block">
+                                <ul id="priceyDates">
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <a id="addDateBtn" href="#" class="button button-raised button-fill color-blue">Add Date</a>
         </div>
     </div>
 
