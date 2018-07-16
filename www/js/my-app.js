@@ -50,7 +50,7 @@ $$(document).on('deviceready', function() {
 });
     
 
-dropdown.onclick = function() {
+dropdown.onchange = function() {
     initializeDates();
 };
 
@@ -322,8 +322,6 @@ addDateBtn.onclick = function() {
         ]
     });
 }
-
-    
 
 function initializeDates() {
     if (datenightDB.getCollection("cities").find().length == 0) {

@@ -26,9 +26,9 @@
         <param name="ios-package" value="CDVStatusBar" />
         <param name="onload" value="true" />
     </feature>
-    <name>Date Night - Phone App</name>
+    <name>Date Night</name>
     <description>
-        A basic Framework7 template for PhoneGap.
+        An app for choosing a random date to go on based on price.
     </description>
     <author email="dev@cordova.apache.org" href="http://cordova.io">
         Apache Cordova Team
@@ -41,6 +41,8 @@
     <allow-intent href="sms:*" />
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
+    <icon density="mdpi" height="57" platform="android" src="HeartIcon.png" width="57" />
+    <icon density="mdpi" height="57" platform="ios" src="HeartIcon.png" width="57" />
     <allow-intent href="itms:*" />
     <allow-intent href="itms-apps:*" />
     <preference name="AllowInlineMediaPlayback" value="false" />
