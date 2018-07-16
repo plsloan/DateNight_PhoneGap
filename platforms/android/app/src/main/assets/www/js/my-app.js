@@ -297,6 +297,11 @@ addDateBtn.onclick = function() {
 
         buttons: [
             { 
+                text: "Cancel",
+                bold: true,
+            },                
+            
+            {
                 text: "Ok",
                 bold: true,
                 onClick: function() {
@@ -313,10 +318,6 @@ addDateBtn.onclick = function() {
                         myApp.alert("Invalid category...", "");
                     }
                 }
-            }, 
-            {
-                text: "Cancel",
-                bold: true,
             }
         ]
     });
@@ -372,6 +373,7 @@ function addDate(doc) {
 
     datenightDB.getCollection("cities").remove(city);
     datenightDB.getCollection("cities").insert(new_doc);
+    initializeDates();
 }
 
 function addDateToList(doc) {
