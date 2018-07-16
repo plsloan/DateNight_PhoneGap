@@ -198,16 +198,68 @@ var freeButton = document.getElementById("freeButton"),
     priceyButton = document.getElementById("priceyButton");
 
 freeButton.onclick = function() { 
-    window.confirm("You pressed free.");
+    // get free dates
+    var city_name = dropdown.options[dropdown.selectedIndex].text.split(', ')[0];
+    var locations = datenightDB.getCollection("cities");
+    var city = locations.find({city: city_name})[0];
+    var freeDates = [];
+
+    for (i=0; i < city.dates.length; i++) {
+        if (city.dates[i].category.toLowerCase() == "free") {
+            freeDates.push(city.dates[i].name);
+        }
+    }
+
+    // pick random from dates
+    var index = Math.floor((Math.random() * freeDates.length));
+
+    // output random free date
+    myApp.alert("Your date is... " + freeDates[index], "");
 };
 cheapButton.onclick = function() { 
-    window.confirm("You pressed cheap."); 
+    var city_name = dropdown.options[dropdown.selectedIndex].text.split(', ')[0];
+    var locations = datenightDB.getCollection("cities");
+    var city = locations.find({city: city_name})[0];
+    var cheapDates = [];
+
+    for (i=0; i < city.dates.length; i++) {
+        if (city.dates[i].category.toLowerCase() == "cheap") {
+            cheapDates.push(city.dates[i].name);
+        }
+    }
+
+    var index = Math.floor((Math.random() * cheapDates.length));
+    myApp.alert("Your date is...\n" + cheapDates[index], "");
 };
 mediumButton.onclick = function() { 
-    window.confirm("You pressed medium.");
+    var city_name = dropdown.options[dropdown.selectedIndex].text.split(', ')[0];
+    var locations = datenightDB.getCollection("cities");
+    var city = locations.find({city: city_name})[0];
+    var mediumDates = [];
+
+    for (i=0; i < city.dates.length; i++) {
+        if (city.dates[i].category.toLowerCase() == "medium") {
+            mediumDates.push(city.dates[i].name);
+        }
+    }
+
+    var index = Math.floor((Math.random() * mediumDates.length));
+    myApp.alert("Your date is...\n" + mediumDates[index], "");
 };
 priceyButton.onclick = function() { 
-    window.confirm("You pressed pricey.");
+    var city_name = dropdown.options[dropdown.selectedIndex].text.split(', ')[0];
+    var locations = datenightDB.getCollection("cities");
+    var city = locations.find({city: city_name})[0];
+    var priceyDates = [];
+
+    for (i=0; i < city.dates.length; i++) {
+        if (city.dates[i].category.toLowerCase() == "pricey") {
+            priceyDates.push(city.dates[i].name);
+        }
+    }
+
+    var index = Math.floor((Math.random() * priceyDates.length));
+    myApp.alert("Your date is...\n" + priceyDates[index], "");
 };
 
 
