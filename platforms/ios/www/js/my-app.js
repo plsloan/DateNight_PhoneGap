@@ -213,7 +213,11 @@ freeButton.onclick = function() {
     var index = Math.floor((Math.random() * freeDates.length));
 
     // output random free date
-    myApp.alert("Your date is... " + freeDates[index], "");
+    if (freeDates.length != 0) {
+        myApp.alert("Your date is... " + freeDates[index], "");
+    } else {
+        myApp.alert("No dates available.", "");
+    }
 };
 cheapButton.onclick = function() { 
     var city_name = dropdown.options[dropdown.selectedIndex].text.split(', ')[0];
@@ -228,7 +232,11 @@ cheapButton.onclick = function() {
     }
 
     var index = Math.floor((Math.random() * cheapDates.length));
-    myApp.alert("Your date is...\n" + cheapDates[index], "");
+    if (cheapDates.length != 0) {
+        myApp.alert("Your date is... " + cheapDates[index], "");
+    } else {
+        myApp.alert("No dates available.", "");
+}
 };
 mediumButton.onclick = function() { 
     var city_name = dropdown.options[dropdown.selectedIndex].text.split(', ')[0];
@@ -243,7 +251,11 @@ mediumButton.onclick = function() {
     }
 
     var index = Math.floor((Math.random() * mediumDates.length));
-    myApp.alert("Your date is...\n" + mediumDates[index], "");
+    if (mediumDates.length != 0) {
+        myApp.alert("Your date is... " + mediumDates[index], "");
+    } else {
+        myApp.alert("No dates available.", "");
+    }
 };
 priceyButton.onclick = function() { 
     var city_name = dropdown.options[dropdown.selectedIndex].text.split(', ')[0];
@@ -258,7 +270,11 @@ priceyButton.onclick = function() {
     }
 
     var index = Math.floor((Math.random() * priceyDates.length));
-    myApp.alert("Your date is...\n" + priceyDates[index], "");
+    if (priceyDates.length != 0) {
+        myApp.alert("Your date is... " + priceyDates[index], "");
+    } else {
+        myApp.alert("No dates available.", "");
+    }
 };
 
 
