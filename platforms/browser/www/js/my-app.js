@@ -55,12 +55,6 @@ dropdown.onclick = function() {
 };
 
 addCityBtn.onclick = function() {
-    if (dropdown.length == 1 && dropdown.options[0].value == "placeholder") {
-        dropdown.options[0] = null;
-        dropdown.options.length = 0;
-    }
-
-    // get input and add city
     myApp.modal({
         title: "Location Information",
 
@@ -137,11 +131,16 @@ deleteCityBtn.onclick = function() {
     datenightDB.getCollection("cities").remove(city);
     dropdown.options[dropdown.selectedIndex] = null;
 
+    initializeCities();
     initializeDates();
 };
 
 function initializeCities() {
     databaseInitialize();
+    while (dropdown.options[0] != null) {
+        dropdown.options[dropdown.options.length - 1] = null;
+    }
+
     var locations = datenightDB.getCollection("cities").find();
 
     if (locations.length != 0) {
