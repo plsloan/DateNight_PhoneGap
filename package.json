@@ -1,26 +1,27 @@
 {
-  "name": "com.plsloan.datenight",
-  "version": "1.0.0",
-  "displayName": "Date Night - Phone App",
-  "cordova": {
-    "platforms": [
-      "ios",
-      "android"
-    ],
-    "plugins": {
-      "cordova-plugin-whitelist": {},
-      "cordova-plugin-console": {},
-      "cordova-plugin-statusbar": {}
+    "name": "com.plsloan.datenight",
+    "version": "1.0.0",
+    "displayName": "Date Night - Phone App",
+    "cordova": {
+        "platforms": [
+            "android",
+            "ios"
+        ],
+        "plugins": {
+            "cordova-plugin-whitelist": {},
+            "cordova-plugin-console": {},
+            "cordova-plugin-statusbar": {}
+        }
+    },
+    "dependencies": {
+        "cordova": "^8.0.0",
+        "cordova-android": "^7.1.0",
+        "cordova-ios": "~4.5.4",
+        "cordova-plugin-console": "~1.0.1",
+        "cordova-plugin-statusbar": "~1.0.1",
+        "cordova-plugin-whitelist": "~1.2.0",
+        "framework7": "^3.0.1",
+        "lokijs": "^1.5.5",
+        "sweetalert": "^2.1.0"
     }
-  },
-  "dependencies": {
-    "cordova-android": "^7.1.0",
-    "cordova-ios": "~4.5.4",
-    "cordova-plugin-console": "~1.0.1",
-    "cordova-plugin-statusbar": "~1.0.1",
-    "cordova-plugin-whitelist": "~1.2.0",
-    "framework7": "^3.0.1",
-    "lokijs": "^1.5.5",
-    "sweetalert": "^2.1.0"
-  }
 }
