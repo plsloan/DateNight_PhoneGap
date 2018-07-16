@@ -291,7 +291,7 @@ function initializeDates() {
     }
 
 
-    var city_name = dropdown.value.toLowerCase().split(", ")[0];
+    var city_name = dropdown.options[dropdown.selectedIndex].text.split(", ")[0];
     var city = datenightDB.getCollection("cities").find({city: city_name})[0];
     
     if (city != null && city.dates.length != 0) {
