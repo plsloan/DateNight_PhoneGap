@@ -170,9 +170,21 @@ function initializeCities() {
     } else {
         var placeholder = document.createElement("option");
         placeholder.value = "placeholder";
-        placeholder.innerText = "Add a City, ST...";
-      
+
+        if (other_cities.length == 0) {
+            placeholder.innerText = "Add a City, ST...";
+        } else {
+            placeholder.innerText = "Select a City...";
+        }
+
         dropdown.appendChild(placeholder);
+
+        if (other_cities.length != 0) {
+            // add other cities by alphabetical order
+            for (var i = 0; i < other_cities.length; i++) {
+                addCityToDropdown(other_cities[i].city, other_cities[i].state);
+            }
+        }
     }
 }
 
