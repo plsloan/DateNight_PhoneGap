@@ -55,9 +55,12 @@ var dropdown = document.getElementById("dropdown_actual"),
 
 
 dropdown.onchange = function() {
-    setCurrentCity(dropdown.options[dropdown.selectedIndex].text);
-    initializeCities();
-    initializeDates();
+    if (dropdown.options.length != 0) {
+        setCurrentCity(dropdown.options[dropdown.selectedIndex].text);
+
+        initializeCities();
+        initializeDates();
+    }
 };
 
 addCityBtn.onclick = function() {
@@ -232,16 +235,7 @@ var freeButton = document.getElementById("freeButton"),
 
 freeButton.onclick = function() { 
     // get free dates
-    var city_name = dropdown.options[dropdown.selectedIndex].text.split(', ')[0];
-    var city = cities.find({city: city_name})[0];
     var freeDates = getCheckedDates("free");
-    // var freeDates = [];
-
-    // for (i=0; i < city.dates.length; i++) {
-    //     if (city.dates[i].category.toLowerCase() == "free") {
-    //         freeDates.push(city.dates[i].name);
-    //     }
-    // }
 
     // pick random from dates
     var index = Math.floor((Math.random() * freeDates.length));
@@ -254,18 +248,9 @@ freeButton.onclick = function() {
     }
 };
 cheapButton.onclick = function() { 
-    var city_name = dropdown.options[dropdown.selectedIndex].text.split(', ')[0];
-    var city = cities.find({city: city_name})[0];
     var cheapDates = getCheckedDates("cheap");
-    // var cheapDates = [];
-
-    // for (i=0; i < city.dates.length; i++) {
-    //     if (city.dates[i].category.toLowerCase() == "cheap") {
-    //         cheapDates.push(city.dates[i].name);
-    //     }
-    // }
-
     var index = Math.floor((Math.random() * cheapDates.length));
+    
     if (cheapDates.length != 0) {
         myApp.alert("Your date is... " + cheapDates[index], "");
     } else {
@@ -273,18 +258,9 @@ cheapButton.onclick = function() {
 }
 };
 mediumButton.onclick = function() { 
-    var city_name = dropdown.options[dropdown.selectedIndex].text.split(', ')[0];
-    var city = cities.find({city: city_name})[0];
     var mediumDates = getCheckedDates("medium");
-    // var mediumDates = [];
-
-    // for (i=0; i < city.dates.length; i++) {
-    //     if (city.dates[i].category.toLowerCase() == "medium") {
-    //         mediumDates.push(city.dates[i].name);
-    //     }
-    // }
-
     var index = Math.floor((Math.random() * mediumDates.length));
+    
     if (mediumDates.length != 0) {
         myApp.alert("Your date is... " + mediumDates[index], "");
     } else {
@@ -292,18 +268,9 @@ mediumButton.onclick = function() {
     }
 };
 priceyButton.onclick = function() { 
-    var city_name = dropdown.options[dropdown.selectedIndex].text.split(', ')[0];
-    var city = cities.find({city: city_name})[0];
     var priceyDates = getCheckedDates("pricey");
-    // var priceyDates = [];
-
-    // for (i=0; i < city.dates.length; i++) {
-    //     if (city.dates[i].category.toLowerCase() == "pricey") {
-    //         priceyDates.push(city.dates[i].name);
-    //     }
-    // }
-
     var index = Math.floor((Math.random() * priceyDates.length));
+    
     if (priceyDates.length != 0) {
         myApp.alert("Your date is... " + priceyDates[index], "");
     } else {
@@ -311,8 +278,68 @@ priceyButton.onclick = function() {
     }
 };
 
-function getCheckedDates(category) {
+function getCheckedDates(category) {   
+    var dates = [];
 
+    if (category == "free") {
+        var freeDates = document.getElementById("freeDates");   
+        var items = freeDates.children;
+        
+        for (var i = 0; i < items.length; i++) {
+            var check_value = items[i].children[0].children[0].checked;
+            var date_name = items[i].children[0].children[2].children[0].innerText;
+            if (check_value) {
+                dates.push(date_name);
+            }
+        }
+
+        return dates;
+
+    } else if (category == "cheap") {
+        var cheapDates = document.getElementById("cheapDates");
+        var items = cheapDates.children;
+        
+        for (var i = 0; i < items.length; i++) {
+            var check_value = items[i].children[0].children[0].checked;
+            var date_name = items[i].children[0].children[2].children[0].innerText;
+            if (check_value) {
+                dates.push(date_name);
+            }
+        }
+
+        return dates;
+
+    } else if (category == "medium") {
+        var mediumDates = document.getElementById("mediumDates");    
+        var items = mediumDates.children;
+        
+        for (var i = 0; i < items.length; i++) {
+            var check_value = items[i].children[0].children[0].checked;
+            var date_name = items[i].children[0].children[2].children[0].innerText;
+            if (check_value) {
+                dates.push(date_name);
+            }
+        }
+
+        return dates;
+
+    } else if (category == "pricey") {
+        var priceyDates = document.getElementById("priceyDates");
+        var items = priceyDates.children;
+        
+        for (var i = 0; i < items.length; i++) {
+            var check_value = items[i].children[0].children[0].checked;
+            var date_name = items[i].children[0].children[2].children[0].innerText;
+            if (check_value) {
+                dates.push(date_name);
+            }
+        }
+
+        return dates;
+
+    } else {
+        console.log("Invalid category...");
+    }
 }
 
 
