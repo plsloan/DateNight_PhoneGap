@@ -168,13 +168,11 @@ function initializeCities() {
             }
         }
     } else {
-        if (dropdown.length == 0) {
-            var placeholder = document.createElement("option");
-            placeholder.value = "placeholder";
-            placeholder.innerText = "Add a City, ST...";
-        
-            dropdown.appendChild(placeholder);
-        }
+        var placeholder = document.createElement("option");
+        placeholder.value = "placeholder";
+        placeholder.innerText = "Add a City, ST...";
+      
+        dropdown.appendChild(placeholder);
     }
 }
 
