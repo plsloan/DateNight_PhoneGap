@@ -21,8 +21,9 @@ $$(document).on('deviceready', function() {
 var categories = ["Free", "Cheap", "Medium", "Pricey"];
 
 
-// -------------------------------------------- MY FUNCTIONS --------------------------------------------
-// database init
+// -------------------------------------------- MY Code --------------------------------------------
+
+// Initialize
 var idbAdapter = new LokiIndexedAdapter();
 var datenightDB = new loki('datenightDB.db', {
     autoload: true,
@@ -31,26 +32,31 @@ var datenightDB = new loki('datenightDB.db', {
     autosaveInterval: 4000
 });
 
+
 function databaseInitialize() {
-    var cities = datenightDB.getCollection("cities");
+    cities = datenightDB.getCollection("cities");
     if (cities === null) {
       cities = datenightDB.addCollection("cities");
     }
 }
-
-// dropdown
-var dropdown = document.getElementById("dropdown_actual"),
-    addCityBtn = document.getElementById("addCityBtn");
-    deleteCityBtn = document.getElementById("deleteCityBtn");
 
 $$(document).on('deviceready', function() {
     databaseInitialize();
     initializeCities();
     initializeDates();
 });
-    
+
+var cities = datenightDB.getCollection("cities");
+
+// dropdown
+var dropdown = document.getElementById("dropdown_actual"),
+    addCityBtn = document.getElementById("addCityBtn");
+    deleteCityBtn = document.getElementById("deleteCityBtn");
+
 
 dropdown.onchange = function() {
+    setCurrentCity(dropdown.options[dropdown.selectedIndex].text);
+    initializeCities();
     initializeDates();
 };
 
@@ -85,6 +91,10 @@ addCityBtn.onclick = function() {
                 "</div>",
 
         buttons: [
+            {
+                text: "Cancel",
+                bold: false,
+            }, 
             { 
                 text: "Ok",
                 bold: true,
@@ -113,10 +123,6 @@ addCityBtn.onclick = function() {
                         console.log(c + ", " + s + " was added.");
                     }
                 }
-            }, 
-            {
-                text: "Cancel",
-                bold: true,
             }
         ]
     })
@@ -136,16 +142,27 @@ deleteCityBtn.onclick = function() {
 };
 
 function initializeCities() {
+    var current_city = cities.find({current: "true"})[0];
+    var other_cities = cities.chain().find({current: "false"}).simplesort("city").data();
+
+    // set cities
     databaseInitialize();
+
+    // clear dropdown
     while (dropdown.options[0] != null) {
         dropdown.options[dropdown.options.length - 1] = null;
     }
 
-    var locations = datenightDB.getCollection("cities").find();
+    // add cities
+    if (current_city.length != 0) {
+        // add current item first
+        addCityToDropdown(current_city.city, current_city.state);
 
-    if (locations.length != 0) {
-        for (i = 0; i < locations.length; i++) {
-            addCityToDropdown(locations[i].city, locations[i].state);
+        if (other_cities.length != 0) {
+            // add other cities by alphabetical order
+            for (var i = 0; i < other_cities.length; i++) {
+                addCityToDropdown(other_cities[i].city, other_cities[i].state);
+            }
         }
     } else {
         if (dropdown.length == 0) {
@@ -159,21 +176,21 @@ function initializeCities() {
 }
 
 function addCity(c, st) {
-    var locations = datenightDB.getCollection("cities");
     var previousID = 0;
 
-    for (i = 0; i < locations.find().length; i++) {
-        previousID = locations.find()[i]._id;
+    for (i = 0; i < cities.find().length; i++) {
+        previousID = cities.find()[i]._id;
     }
 
     var doc = {
         _id: previousID + 1,
         city: c,
         state: st,
-        dates: []
+        dates: [],
+        current: "false"
     };
 
-    locations.insert(doc);
+    cities.insert(doc);
     addCityToDropdown(c, st);
 }
 
@@ -190,6 +207,23 @@ function addCityToDropdown(c, st) {
     }
 }
 
+function setCurrentCity(c) {  
+    // get city name
+    var city_name = c.split(", ")[0];
+
+    // set all currents to false
+    var current_city = cities.find({current: "true"});
+    for (var i = 0; i < current_city.length; i++) {
+        current_city[i].current = "false";
+    }
+    cities.update(current_city);
+
+    // set new current city
+    var new_current = cities.find({city: city_name});
+    new_current[0].current = "true";
+    cities.update(new_current);
+}
+
 // button functions
 var freeButton = document.getElementById("freeButton"),
     cheapButton = document.getElementById("cheapButton"),
@@ -199,15 +233,15 @@ var freeButton = document.getElementById("freeButton"),
 freeButton.onclick = function() { 
     // get free dates
     var city_name = dropdown.options[dropdown.selectedIndex].text.split(', ')[0];
-    var locations = datenightDB.getCollection("cities");
-    var city = locations.find({city: city_name})[0];
-    var freeDates = [];
+    var city = cities.find({city: city_name})[0];
+    var freeDates = getCheckedDates("free");
+    // var freeDates = [];
 
-    for (i=0; i < city.dates.length; i++) {
-        if (city.dates[i].category.toLowerCase() == "free") {
-            freeDates.push(city.dates[i].name);
-        }
-    }
+    // for (i=0; i < city.dates.length; i++) {
+    //     if (city.dates[i].category.toLowerCase() == "free") {
+    //         freeDates.push(city.dates[i].name);
+    //     }
+    // }
 
     // pick random from dates
     var index = Math.floor((Math.random() * freeDates.length));
@@ -221,15 +255,15 @@ freeButton.onclick = function() {
 };
 cheapButton.onclick = function() { 
     var city_name = dropdown.options[dropdown.selectedIndex].text.split(', ')[0];
-    var locations = datenightDB.getCollection("cities");
-    var city = locations.find({city: city_name})[0];
-    var cheapDates = [];
+    var city = cities.find({city: city_name})[0];
+    var cheapDates = getCheckedDates("cheap");
+    // var cheapDates = [];
 
-    for (i=0; i < city.dates.length; i++) {
-        if (city.dates[i].category.toLowerCase() == "cheap") {
-            cheapDates.push(city.dates[i].name);
-        }
-    }
+    // for (i=0; i < city.dates.length; i++) {
+    //     if (city.dates[i].category.toLowerCase() == "cheap") {
+    //         cheapDates.push(city.dates[i].name);
+    //     }
+    // }
 
     var index = Math.floor((Math.random() * cheapDates.length));
     if (cheapDates.length != 0) {
@@ -240,15 +274,15 @@ cheapButton.onclick = function() {
 };
 mediumButton.onclick = function() { 
     var city_name = dropdown.options[dropdown.selectedIndex].text.split(', ')[0];
-    var locations = datenightDB.getCollection("cities");
-    var city = locations.find({city: city_name})[0];
-    var mediumDates = [];
+    var city = cities.find({city: city_name})[0];
+    var mediumDates = getCheckedDates("medium");
+    // var mediumDates = [];
 
-    for (i=0; i < city.dates.length; i++) {
-        if (city.dates[i].category.toLowerCase() == "medium") {
-            mediumDates.push(city.dates[i].name);
-        }
-    }
+    // for (i=0; i < city.dates.length; i++) {
+    //     if (city.dates[i].category.toLowerCase() == "medium") {
+    //         mediumDates.push(city.dates[i].name);
+    //     }
+    // }
 
     var index = Math.floor((Math.random() * mediumDates.length));
     if (mediumDates.length != 0) {
@@ -259,15 +293,15 @@ mediumButton.onclick = function() {
 };
 priceyButton.onclick = function() { 
     var city_name = dropdown.options[dropdown.selectedIndex].text.split(', ')[0];
-    var locations = datenightDB.getCollection("cities");
-    var city = locations.find({city: city_name})[0];
-    var priceyDates = [];
+    var city = cities.find({city: city_name})[0];
+    var priceyDates = getCheckedDates("pricey");
+    // var priceyDates = [];
 
-    for (i=0; i < city.dates.length; i++) {
-        if (city.dates[i].category.toLowerCase() == "pricey") {
-            priceyDates.push(city.dates[i].name);
-        }
-    }
+    // for (i=0; i < city.dates.length; i++) {
+    //     if (city.dates[i].category.toLowerCase() == "pricey") {
+    //         priceyDates.push(city.dates[i].name);
+    //     }
+    // }
 
     var index = Math.floor((Math.random() * priceyDates.length));
     if (priceyDates.length != 0) {
@@ -276,6 +310,10 @@ priceyButton.onclick = function() {
         myApp.alert("No dates available.", "");
     }
 };
+
+function getCheckedDates(category) {
+
+}
 
 
 // left panel
@@ -314,7 +352,7 @@ addDateBtn.onclick = function() {
         buttons: [
             { 
                 text: "Cancel",
-                bold: true,
+                bold: false,
             },                
             
             {
@@ -382,7 +420,8 @@ function addDate(doc) {
         _id: city._id,
         city: city.city,
         state: city.state,
-        dates: city.dates
+        dates: city.dates,
+        current: "false"
     };
 
     datenightDB.getCollection("cities").remove(city);
@@ -429,7 +468,6 @@ function addDateToList(doc) {
         myApp.confirm("Would you like to delete this date?", "", 
             function() {   // on ok
                 var city_name = dropdown.options[dropdown.selectedIndex].text.split(", ")[0];
-                var locations = datenightDB.getCollection("cities");
                 var city = datenightDB.getCollection("cities").find({ city: { "$regex": [city_name, "i"] }})[0];
                 var index;
                 var date_name = delete_button.parentElement.children[2].children[0].innerText;
@@ -438,7 +476,8 @@ function addDateToList(doc) {
                     _id: city._id,
                     city: city.city, 
                     state: city.state,
-                    dates: city.dates
+                    dates: city.dates,
+                    current: "false"
                 };
                 
                 for (var i=0; i < new_city.dates.length; i++) {
@@ -451,8 +490,8 @@ function addDateToList(doc) {
                 var date_category = city.dates[index].category;
                 var items;
                 new_city.dates.splice(index, 1);
-                locations.remove(city);
-                locations.insert(new_city);
+                cities.remove(city);
+                cities.insert(new_city);
 
                 if (date_category.toLowerCase() == "free") {
                     items = freeDates.children;

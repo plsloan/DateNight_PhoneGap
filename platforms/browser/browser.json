@@ -7,13 +7,13 @@
         "files": {}
     },
     "installed_plugins": {
-        "cordova-plugin-whitelist": {
-            "PACKAGE_NAME": "com.plsloan.datenight"
-        },
         "cordova-plugin-console": {
             "PACKAGE_NAME": "com.plsloan.datenight"
         },
         "cordova-plugin-statusbar": {
+            "PACKAGE_NAME": "com.plsloan.datenight"
+        },
+        "cordova-plugin-whitelist": {
             "PACKAGE_NAME": "com.plsloan.datenight"
         }
     },
@@ -29,8 +29,8 @@
         }
     ],
     "plugin_metadata": {
-        "cordova-plugin-whitelist": "1.2.2",
         "cordova-plugin-console": "1.0.7",
-        "cordova-plugin-statusbar": "1.0.1"
+        "cordova-plugin-statusbar": "1.0.1",
+        "cordova-plugin-whitelist": "1.2.2"
     }
 }

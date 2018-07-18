@@ -12,8 +12,8 @@
     <description>
         An app for choosing a random date to go on based on price.
     </description>
-    <author email="dev@cordova.apache.org" href="http://cordova.io">
-        Apache Cordova Team
+    <author>
+        Phillip Sloan
     </author>
     <content src="index.html" />
     <access origin="*" />
@@ -28,5 +28,5 @@
     <allow-intent href="market:*" />
     <preference name="loglevel" value="DEBUG" />
     <preference name="DisallowOverscroll" value="true" />
-    <preference name="android-minSdkVersion" value="14" />
+    <preference name="android-minSdkVersion" value="19" />
 </widget>

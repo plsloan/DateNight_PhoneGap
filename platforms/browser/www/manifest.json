@@ -1,0 +1,22 @@
+{
+  "background_color": "#FFF",
+  "display": "standalone",
+  "name": "Date Night",
+  "short_name": "Date Night",
+  "version": "com.plsloan.datenight",
+  "description": "An app for choosing a random date to go on based on price.",
+  "author": "Phillip Sloan",
+  "icons": [
+    {
+      "src": "HeartIcon.png",
+      "type": "image/png",
+      "sizes": "57x57"
+    },
+    {
+      "src": "HeartIcon.png",
+      "type": "image/png",
+      "sizes": "57x57"
+    }
+  ],
+  "start_url": "index.html"
+}
