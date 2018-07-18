@@ -157,7 +157,7 @@ function initializeCities() {
     }
 
     // add cities
-    if (current_city.length != 0) {
+    if (cities.find({current: "true"}) != 0) {
         // add current item first
         addCityToDropdown(current_city.city, current_city.state);
 
